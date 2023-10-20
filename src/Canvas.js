@@ -8,7 +8,7 @@ const Canvas = () => {
     const canvasRef = useRef(null);
     
     const descargar =() => {
-        console.log(canvasRef.current.canvasContainer.children[1]);
+        
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
