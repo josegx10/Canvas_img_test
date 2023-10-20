@@ -1,0 +1,19 @@
+.canvas {
+    position: fixed;
+    width: 40%;
+    text-align: center;
+    
+}
+.images {
+   width: 40%;
+   text-align: center;
+}
+
+ .button-canvas {
+    position: fixed;
+
+    margin-top: 80vh;
+ } 
+
+
+ 
