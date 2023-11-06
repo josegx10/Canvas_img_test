@@ -1,77 +1,50 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import "./Canvas.css";
-import CanvasDraw from "react-canvas-draw";
+import { ReactSketchCanvas } from "react-sketch-canvas"; // Libreria https://www.npmjs.com/package/react-sketch-canvas
 import bubis from "./assets/Bubis.png";
+
 const Canvas = () => {
   const canvasRef = useRef(null);
+  const [canvasProps, setCanvasProps] = useState({
+    // aqui se agregen todos los props a usar en la imagen
+    backgroundImage: bubis,
+    exportWithBackgroundImage: true,
+  });
+  const descargar = async () => {
+    const exportImage = canvasRef.current?.exportImage; // Con los props que se agregaron se descargara el canvas junto a la imagen a la vez
 
-  const descargar = () => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    const img1 = new Image();
-    const img2 = JSON.parse(canvasRef.current.getSaveData());
+    if (exportImage) {
+      const exportedDataURI = await exportImage("png");
+      const image = document.createElement("a");
 
-    img1.src = bubis;
-    console.log(img1);
-    canvas.width = img1.width;
-    canvas.height = img1.height;
+      image.download = "Canvas.png";
 
-    ctx.drawImage(img1, 0, 0);
+      image.href = exportedDataURI;
 
-    ctx.beginPath();
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 5;
-    ctx.moveTo(img2.lines[0].points[0].x, img2.lines[0].points[0].y);
-    for (let n = 0; n < img2.lines.length; n++) {
-      for (let m = 0; m < img2.lines[n].points.length; m++) {
-        ctx.lineTo(img2.lines[n].points[m].x, img2.lines[n].points[m].y);
-      }
+      image.click();
     }
-
-    ctx.stroke();
-
-    const combinedImage = canvas.toDataURL("image/png");
-    const enlace = document.createElement("a");
-
-    enlace.download = "Canvas.png";
-
-    enlace.href = combinedImage;
-
-    enlace.click();
   };
 
   const limpiar = () => {
-    canvasRef.current.clear();
-
-  }
+    canvasRef.current.clearCanvas();
+  };
 
   return (
     <>
       <>
         {" "}
         <div className="canvas">
-          <CanvasDraw
+          <ReactSketchCanvas
             ref={canvasRef}
-            className="canvas-draw"
-            hideInterface={true}
-            brushRadius={2}
-            brushColor="red"
-            hideGrid={true}
-            style={{
-              background: 0,
-              width: "100%",
-              height: "32vh",
-              border: "1px solid",
-            }}
+            width="90%"
+            height="28vh"
+            strokeWidth={4}
+            strokeColor="red"
+            {...canvasProps}
           />
           <button onClick={descargar}> Descargar </button>{" "}
           <button onClick={limpiar}> Limpiar </button>
-        </div>
-        
-        <div className="images">
-          {" "}
-          <img src={bubis} />{" "}
         </div>
       </>
     </>

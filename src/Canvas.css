@@ -1,19 +1,15 @@
 .canvas {
-    position: fixed;
-    width: 26%;
-    text-align: center;
-    
+  position: fixed;
+  width: 28%;
+  text-align: center;
 }
 .images {
-   width: 20%;
-   text-align: center;
+  width: 20%;
+  text-align: center;
 }
 
- .button-canvas {
-    position: fixed;
+.button-canvas {
+  position: fixed;
 
-    margin-top: 80vh;
- } 
-
-
- 
+  margin-top: 80vh;
+}
